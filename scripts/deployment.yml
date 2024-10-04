@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: satyamraina
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: satyamraina
+  template:
+    metadata:
+      labels:
+        app: satyamraina
+    spec:
+      containers: 
+      - name: satyamraina
+        image: raina_new1:1
+        ports:
+        - containerPort: 8000
+        imagePullPolicy: Never
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://finaltry_user:Ji2Wo9051WLSQ41ZYJdy3RPB3NvE5Zyo@dpg-crvpsn3tq21c738okaog-a.oregon-postgres.render.com/finaltry"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: satyamraina
+spec:
+  selector:
+    app: satyamraina
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
